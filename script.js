@@ -1,6 +1,5 @@
 addEventListener('load', init);
 
-
 let wordInput = document.querySelector("#word-input");
 let currentWord = document.querySelector("#current-word");
 let scoreDisplay = document.querySelector("#score");
@@ -17,6 +16,7 @@ let levels = {
     "medium": 3,
     "hard": 2,
 }
+let words = [];
 let currentLevel = levels.easy;
 let timer = currentLevel;
 let isPlaying = false;
@@ -41,15 +41,13 @@ hardBtn.addEventListener("click", () => {
     }}
 );
 
-const words = [
-    'hat',
-    'river',
-    'lucky',
-    'generate',
-    'statue',
-];
+async function fetchWord() {
+    
+}
 
-function init() {
+async function init() {
+    const res = await fetch("https://random-word-api.herokuapp.com/all");
+    words = await res.json();
     seconds.textContent = `you have ${currentLevel} seconds to type the word`;
     let randIndex = Math.floor(Math.random() * words.length);
     currentWord.textContent = words[randIndex];
