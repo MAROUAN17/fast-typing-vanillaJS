@@ -12,32 +12,32 @@ let hardBtn = document.querySelector("#hard");
 
 
 let levels = {
-    "easy": 5,
-    "medium": 3,
-    "hard": 2,
+    "easy": {seconds: 5, wordLength: 5},
+    "medium": {seconds: 3, wordLength: 8},
+    "hard": {seconds: 2, wordLength: 12},
 }
 let words = [];
 let currentLevel = levels.easy;
-let timer = currentLevel;
+let timer = currentLevel.seconds;
 let isPlaying = false;
 let score = 0;
 
 easyBtn.addEventListener("click", () => {
-    if(!isPlaying) {
+    if (!isPlaying) {
         currentLevel = levels.easy;
-        timer = currentLevel;
+        timer = currentLevel.seconds;
     }}
 );
 mediumBtn.addEventListener("click", () => {
-    if(!isPlaying) {
+    if (!isPlaying) {
         currentLevel = levels.medium;
-        timer = currentLevel;
+        timer = currentLevel.seconds;
     }}
 );
 hardBtn.addEventListener("click", () => {
-    if(!isPlaying) {
+    if (!isPlaying) {
         currentLevel = levels.hard;
-        timer = currentLevel;
+        timer = currentLevel.seconds;
     }}
 );
 
@@ -45,8 +45,12 @@ async function init() {
     try {
         const res = await fetch("https://random-word-api.herokuapp.com/all");
         words = await res.json();
-        seconds.textContent = `you have ${currentLevel} seconds to type the word`;
+        seconds.textContent = `you have ${currentLevel.seconds} seconds to type the word`;
         let randIndex = Math.floor(Math.random() * words.length);
+        console.log(currentLevel.wordLength);
+        while (words[randIndex].length > currentLevel.wordLength) {
+            randIndex = Math.floor(Math.random() * words.length);
+        }
         currentWord.textContent = words[randIndex];
         scoreDisplay.textContent = `score : ${score}`;
         setInterval(countdown, 1000);
@@ -58,11 +62,15 @@ async function init() {
 
 function generateWords() {
     let randIndex = Math.floor(Math.random() * words.length);
+    while (words[randIndex].length > currentLevel.wordLength) {
+        randIndex = Math.floor(Math.random() * words.length);
+    }
     currentWord.textContent = words[randIndex];
+    console.log("word length : ", currentWord.textContent.length);
     isPlaying = true;
     wordInput.value = "";
     message.textContent = "";
-    timer = currentLevel;
+    timer = currentLevel.seconds;
     score++;
     scoreDisplay.textContent = `score : ${score}`;
 }
@@ -82,7 +90,6 @@ function startMatch() {
 function matchWords() {
     let colorChar = '';
     for (let i = 0; i < currentWord.textContent.length; i++)  {
-        console.log(i);
         if (i < wordInput.value.length) {
             if (wordInput.value.charAt(i) === currentWord.textContent.charAt(i))
                 colorChar += `<span class="text-green-500">${currentWord.textContent.charAt(i)}</span>`;
@@ -109,7 +116,7 @@ function countdown() {
 
 function checkGameStatus() {
     timeDisplay.textContent = timer;
-    seconds.textContent = `you have ${currentLevel} seconds to type the word`;
+    seconds.textContent = `you have ${currentLevel.seconds} seconds to type the word`;
     if (!isPlaying && timer == 0) {
         message.textContent = "Game Over";
         score = 0;
