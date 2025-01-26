@@ -41,19 +41,19 @@ hardBtn.addEventListener("click", () => {
     }}
 );
 
-async function fetchWord() {
-    
-}
-
 async function init() {
-    const res = await fetch("https://random-word-api.herokuapp.com/all");
-    words = await res.json();
-    seconds.textContent = `you have ${currentLevel} seconds to type the word`;
-    let randIndex = Math.floor(Math.random() * words.length);
-    currentWord.textContent = words[randIndex];
-    scoreDisplay.textContent = `score : ${score}`;
-    setInterval(countdown, 1000);
-    setInterval(checkGameStatus, 50);
+    try {
+        const res = await fetch("https://random-word-api.herokuapp.com/all");
+        words = await res.json();
+        seconds.textContent = `you have ${currentLevel} seconds to type the word`;
+        let randIndex = Math.floor(Math.random() * words.length);
+        currentWord.textContent = words[randIndex];
+        scoreDisplay.textContent = `score : ${score}`;
+        setInterval(countdown, 1000);
+        setInterval(checkGameStatus, 50);
+    } catch(err) {
+        console.log(err.message);
+    }
 }
 
 function generateWords() {
@@ -80,10 +80,24 @@ function startMatch() {
 }
 
 function matchWords() {
+    let colorChar = '';
+    for (let i = 0; i < currentWord.textContent.length; i++)  {
+        console.log(i);
+        if (i < wordInput.value.length) {
+            if (wordInput.value.charAt(i) === currentWord.textContent.charAt(i))
+                colorChar += `<span class="text-green-500">${currentWord.textContent.charAt(i)}</span>`;
+            else
+                colorChar += `<span class="text-red-500">${currentWord.textContent.charAt(i)}</span>`;
+        }
+        else {
+            colorChar += `<span class="text-white">${currentWord.textContent.charAt(i)}</span>`;
+        }
+    }
+    currentWord.innerHTML = colorChar;
     if (wordInput.value === currentWord.textContent)
         return (true);
     else
-    return (false);
+        return (false);
 }
 
 function countdown() {
