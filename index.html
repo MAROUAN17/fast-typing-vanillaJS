@@ -13,29 +13,44 @@
     </style>
 </head>
 <body class="bg-black">
-  <div class="container p-12">
-    <div class="">
-        <h1 class="text-center text-black font-bold text-xl text-white">Fast Typing</h1>
+  <div class="p-12">
+    <div class="text-center py-32">
+      <h1 class="font-poppins text-white text-2xl">Fast Typing</h1>
+        <h1 class="text-center text-black font-bold text-6xl text-white">Test You Typing Speed!</h1>
+    </div>
+    <div class="flex justify-between items-center rounded-lg mx-62">
+      <div class="flex border-4 border-white rounded-full inline-block p-4">
+        <h1 id="time" class="text-center text-white font-bold text-4xl"></h1>
+        <p class="text-white">Seconds</p>
+      </div>
+      <div class="flex space-x-4">
+        <div class="flex border-4 border-white rounded-lg inline-block px-4 py-3">
+          <h1 id="score" class="text-center text-white font-bold text-4xl"></h1>
+          <p class="text-white">Words</p>
+        </div>
+        <div class="flex border-4 border-white rounded-lg inline-block px-4 py-3">
+          <h1 id="current-level" class="text-center text-white font-bold text-3xl"></h1>
+          <p class="text-white text-center">Level</p>
+        </div>
+        <div class="flex border-4 border-white rounded-lg inline-block px-4 py-3">
+          <h1 id="nbr-mistakes" class="text-center text-white font-bold text-3xl"></h1>
+          <p class="text-white text-center">Mistakes</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h1 id="timer" class="text-white font-bold"></h1>
+    </div>
+    <div id="current-word-container" class="text-center py-22 space-y-12" tabindex="0">
+      <h1 id="current-word" class="text-white text-6xl"></h1>
+    </div>
+    <div>
+      <h1 id="message" class="text-white font-bold"></h1>
     </div>
     <div class="flex justify-center space-x-6 py-12">
       <button id="easy" class="font-bold text-black bg-white px-4 py-3 rounded-lg">Easy</button>
       <button id="medium" class="font-bold text-black bg-white px-4 py-3 rounded-lg">Medium</button>
       <button id="hard" class="font-bold text-black bg-white px-4 py-3 rounded-lg">Hard</button>
-    </div>
-    <div class="text-center">
-      <h1 id="seconds" class="text-white font-bold"></h1>
-    </div>
-    <div>
-      <h1 id="timer" class="text-white font-bold"></h1>
-    </div>
-    <div class="text-center py-42 space-y-12">
-      <h1 id="current-word" class="text-white text-4xl"></h1>
-      <input id="word-input" class="bg-white rounded-lg py-2 px-6" type="text" />
-    </div>
-    <div>
-      <h1 id="score" class="text-white font-bold"></h1>
-      <h1 id="time" class="text-white font-bold"></h1>
-      <h1 id="message" class="text-white font-bold"></h1>
     </div>
   </div>
 </body>
