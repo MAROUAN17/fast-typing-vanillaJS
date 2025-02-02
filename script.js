@@ -35,6 +35,7 @@ let currentSentence = "";
 let correctChar = 0;
 let wpm = 0;
 let accuracy = 0;
+let lastLength = 0;
 
 async function init() {
     try {
@@ -65,7 +66,7 @@ currentWordsContainer.addEventListener('keyup', (ev) => {
 });
 
 
-addEventListener("input", startMatch);
+addEventListener("input", matchWords);
 
 function tryAgain() {
     modalItem.classList.add("hidden");
@@ -88,7 +89,6 @@ function tryAgain() {
 function matchWords(key) {
     isPlaying = true;
     let colorChar = '';
-    let incorrect = false;
     if (key == "Backspace")
         wordToCompare = wordToCompare.slice(0, -1);
     else
@@ -99,16 +99,15 @@ function matchWords(key) {
                 colorChar += `<span class="text-green-500">${currentSentenceC.textContent.charAt(i)}</span>`;
             else {
                 colorChar += `<span class="text-red-500">${currentSentenceC.textContent.charAt(i)}</span>`;
-                if (key != "Backspace")
-                    incorrect = true;
+                if (i === lastLength)
+                    nbrMistakes++;
             }
             nbrWordsTyped++;
         }
         else
             colorChar += `<span class="text-white">${currentSentenceC.textContent.charAt(i)}</span>`;
     }
-    if (incorrect)
-        nbrMistakes++;
+    lastLength = wordToCompare.length;
     currentSentenceC.innerHTML = colorChar;
     if (wordToCompare === currentSentenceC.textContent)
         return (true);
